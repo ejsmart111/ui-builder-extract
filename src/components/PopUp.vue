@@ -8,7 +8,7 @@
                   class="items"
                   :style="{
                      fontSize: `${widget.size}px`,
-                     color: widget.color,left: position(widget.x), top: position(widget.y),
+                     color: widget.color, left: position(widget.x, 'x'), top: position(widget.y, 'y'),
                      fontWeight: widget.fontWeight,
                      textAlign: widget.textAlign,
                      width: widget.width+'px',
@@ -24,7 +24,7 @@
                      padding: widget.paddingX+'px '+widget.paddingY+'px',
                      width: widget.width+'px',
                      border: widget.border,
-                     left: position(widget.x), top: position(widget.y),
+                     left: position(widget.x, 'x'), top: position(widget.y, 'y'),
                      borderRadius: widget.borderRadius+'px'}"
                      v-model="widget.value"
                   />
@@ -35,7 +35,7 @@
                      backgroundColor: background(widget),
                      padding: widget.paddingX+'px '+widget.paddingY+'px',
                      border: widget.border,
-                     left: position(widget.x), top: position(widget.y),
+                     left: position(widget.x, 'x'), top: position(widget.y, 'y'),
                      borderRadius: `${widget.borderRadius}%`,
                      height: `${widget.height}px`,
                      width: `${widget.width}px`,
@@ -47,7 +47,7 @@
                      backgroundColor: background(widget),
                      padding: widget.paddingX+'px '+widget.paddingY+'px',
                      border: widget.border,
-                     left: position(widget.x), top: position(widget.y),
+                     left: position(widget.x, 'x'), top: position(widget.y, 'y'),
                      borderRadius: `${widget.borderRadius}%`,
                      height: `${widget.height}px`,
                      width: `${widget.width}px`,
@@ -59,7 +59,7 @@
                      color: widget.color,
                      zIndex: '1000',
                      opacity: widget.isTransparent?0:1,
-                     left: position(widget.x), top: position(widget.y),
+                     left: position(widget.x, 'x'), top: position(widget.y, 'y'),
                      fontSize: widget.size}"
                   icon="fa-star"
                />
@@ -71,7 +71,7 @@
                      height: `${widget.height}px`,
                      width: `${widget.width}px`,
                      fontSize: `${widget.size}px`,
-                     left: position(widget.x), top: position(widget.y),
+                     left: position(widget.x, 'x'), top: position(widget.y, 'y'),
                      color: widget.color,
                      borderRadius: `${widget.borderRadius}px`,
                      fontWeight: widget.fontWeight
@@ -100,8 +100,19 @@ export default {
       background: function () {
          return widget => widget.isTransparent == 'true' ? 'transparent': widget.background
       },
+      width() {
+         return window.innerWidth
+      },
       position: function () {
-         return num => num-180+'px'
+         return (num, type) => {
+            if (type==='x'){
+               if(this.width <= 500) {
+                  return num-30+'px'
+               }
+               return num-200+'px'
+            }
+            return num-150+'px'
+         }
       },
    },
    methods: {
@@ -130,12 +141,17 @@ export default {
    .box {
       /* animation: scaleup 0.5s ease-in-out; */
       box-sizing: border-box !important;
-      display: block;
+      right: 0;
+      bottom: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
       height: 700px;
       justify-content: center;
+      align-items: center;
       margin: 0 auto;
       position: fixed;
-      width: 100%;
+      width: 800px;
    }
 
    .item-box {
