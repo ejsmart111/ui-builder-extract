@@ -1,6 +1,6 @@
 <template>
    <div>
-      <p style="text-align: center">This is the center</p>
+      <p style="text-align: center; display: none">This is the center</p>
        <div v-show="show" id="box" class="box">
          <div class="item-box">
             <div class="inner d">
